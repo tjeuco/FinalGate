@@ -34,7 +34,7 @@ public class PlayerAnimation : MonoBehaviour
         // ánh sạ B = (A+1)/2 
         float animValue = (inputY + 1f) / 2f;
         Debug.Log("Set Float" + animValue);
-        animator.SetFloat("IsIdleShoot", 1);
+        animator.SetFloat("IsIdleShoot", animValue);
     }
 
 }

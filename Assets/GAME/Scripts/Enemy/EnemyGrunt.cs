@@ -1,8 +1,7 @@
 using System;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyGrunt : MonoBehaviour, IHitable
 {
@@ -24,18 +23,43 @@ public class EnemyGrunt : MonoBehaviour, IHitable
     private Vector3 startPos;
     private PlayerControl playerPos;
 
-    EnemyStateBase currentEnemyState;
+    GruntStateBase currentEnemyState;
+    Dictionary<Type, GruntStateBase> enemyStates = new Dictionary<Type, GruntStateBase>();
 
-    void Awake()
+    private void Awake()
     {
+        this.enemyStates.Add(typeof(GruntStateAttack), new GruntStateAttack(this));
+        this.enemyStates.Add(typeof(GruntStateChase), new GruntStateChase(this));
+        this.enemyStates.Add(typeof(GruntStatePatrol), new GruntStatePatrol(this));
+
         fireCoolDown = 1f / fireRate;
-        idleTimer = idleDelay ;
+        idleTimer = idleDelay;
         startPos = this.transform.position;
-        playerPos=FindAnyObjectByType<PlayerControl>();
+        playerPos = FindAnyObjectByType<PlayerControl>();
     }
+
+    public void Start()
+    {
+        ChangState(typeof(GruntStatePatrol));
+    }
+
+    public void ChangState(Type newState)
+    {
+        if (!this.enemyStates.ContainsKey(newState))
+            return;
+
+        if (this.currentEnemyState == this.enemyStates[newState]) 
+            return;
+
+        if (this.currentEnemyState != null)
+            this.currentEnemyState.OnExit();
+        this.currentEnemyState = this.enemyStates[newState];
+        this.currentEnemyState.OnEnter();
+    }
+
      void Update()
     {
-        currentEnemyState.Execute(this);
+        currentEnemyState.Execute();
         if (playerPos == null)
         {
              return;
@@ -53,7 +77,7 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         CheckPosEnemy();
     }
 
-    public void ChangeState(EnemyStateBase newState)
+    public void ChangeState(GruntStateBase newState)
     {
         if (currentEnemyState == newState) return;
         this.currentEnemyState.OnExit();
