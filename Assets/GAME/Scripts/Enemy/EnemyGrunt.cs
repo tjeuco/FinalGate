@@ -1,29 +1,22 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyGrunt : MonoBehaviour, IHitable
 {
-    
-    //private Animator animator;
-    private float idleDelay = 2f;
-    private float idleTimer;
-
-    [SerializeField] private GameObject bulletGrunt;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float fireRate = 1f;
-    [SerializeField] private float shootRange = 10f;
-    [SerializeField] private float fireCoolDown;
-    [SerializeField] private int scoreEnemyGrunt = 1;
-    [SerializeField] protected float speedGrunt = 0.5f;
-    [SerializeField] protected float distance = 3f;
-    protected bool moveRight = true;
+    [SerializeField] private GruntEnemyDataSO gruntEnemyDataSO;
+    public GruntEnemyDataSO GruntEnemyDataSO => gruntEnemyDataSO;
+    
 
     private Vector3 startPos;
-    private PlayerControl playerPos;
+    public Vector3 StartPos => startPos;
 
-    GruntStateBase currentEnemyState;
+    private PlayerControl playerPos;
+    public PlayerControl PlayerPosition => playerPos;
+
+    GruntStateBase currentEnemyState; // trạng thái hiện tại của enemy
     Dictionary<Type, GruntStateBase> enemyStates = new Dictionary<Type, GruntStateBase>();
 
     private void Awake()
@@ -32,8 +25,6 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         this.enemyStates.Add(typeof(GruntStateChase), new GruntStateChase(this));
         this.enemyStates.Add(typeof(GruntStatePatrol), new GruntStatePatrol(this));
 
-        fireCoolDown = 1f / fireRate;
-        idleTimer = idleDelay;
         startPos = this.transform.position;
         playerPos = FindAnyObjectByType<PlayerControl>();
     }
@@ -60,20 +51,8 @@ public class EnemyGrunt : MonoBehaviour, IHitable
      void Update()
     {
         currentEnemyState.Execute();
-        if (playerPos == null)
-        {
-             return;
-        }
-        if (idleTimer > 0)
-          {
-              idleTimer -= Time.deltaTime;
-              return;
-          }
-        if (Vector3.Distance(transform.position, playerPos.transform.position) <= shootRange)
-          {
-              Attack();
-          }
-        EnemyMove();
+        
+        //EnemyPatrol();
         CheckPosEnemy();
     }
 
@@ -84,7 +63,7 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         this.currentEnemyState = newState;
         this.currentEnemyState.OnEnter();
     }
-     void Attack()
+    /* void Attack()
     {
         fireCoolDown -= Time.deltaTime;
 
@@ -97,7 +76,7 @@ public class EnemyGrunt : MonoBehaviour, IHitable
             GruntBullet gruntBullet = bullet.GetComponent<GruntBullet>();
             gruntBullet.SetDirectionBullet(transform.localScale.x > 0 ? Vector3.right : Vector3.left);
         }
-    }
+    } */
    
     public void CheckPosEnemy()
     {
@@ -108,7 +87,7 @@ public class EnemyGrunt : MonoBehaviour, IHitable
     }
 
     
-    void EnemyMove()
+   /* void EnemyPatrol()
     {
         float leftBound = startPos.x - distance;
         float rightBound = startPos.x + distance;
@@ -131,7 +110,7 @@ public class EnemyGrunt : MonoBehaviour, IHitable
             }
         }
     }
-   
+   */
     
 
     public void SetStartPos(Vector3 pos) // set lai pos khi pooling enemy
@@ -146,6 +125,6 @@ public class EnemyGrunt : MonoBehaviour, IHitable
 
     public int ReturnScoreEnemy()
     {
-        return scoreEnemyGrunt;
+        return this.gruntEnemyDataSO.scoreEnemyGrunt;
     }
 }

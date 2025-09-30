@@ -6,18 +6,16 @@ using UnityEngine.Windows;
 public class PlayerControl : MonoBehaviour
 {
     [SerializeField] private Transform pointCheckGround;
-    [SerializeField] private Transform pointFire;
+    [SerializeField] private Transform pointFireIdle;
+    [SerializeField] private Transform pointFireLie;
     [SerializeField] private LayerMask layerGroundCheck;
     [SerializeField] private GameObject bulletPrefab;
 
     [SerializeField] private PlayerDataSO playerDataSO;
-    [Header("-----Audio-----")]
 
     private bool isGround = false;
     private Rigidbody2D rg;
     
-
-    private float score = 0;
     private bool isLieDown = false;
 
     [Header("-----Actions------")]
@@ -26,10 +24,12 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] InputActionReference movementAction;
     [SerializeField] InputActionReference lieAction;
     [SerializeField] InputActionReference actAction;
+
+    [SerializeField] Transform btnLieDown, btnAct;// bat tat khi khong du dieu khien
+
     Vector2 inputJoy;
 
-    [SerializeField]
-    PlayerAnimation anim;
+    [SerializeField] PlayerAnimation anim;
     PLAYER_STATE playerState = PLAYER_STATE.IsIdle;
     public PLAYER_STATE PlayerState => playerState;
 
@@ -49,12 +49,7 @@ public class PlayerControl : MonoBehaviour
         PlayerShoot();
         AutodetectState();
         PlayerAction();
-        if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayerJump();
-        }
 
-        //DirectionBulletFromJoy();
     }
 
     void PlayerMove()
@@ -92,7 +87,15 @@ public class PlayerControl : MonoBehaviour
         {
             GameObject bullet = LazyPooling.Instance.GetObject(bulletPrefab);
             bullet.gameObject.SetActive(true);
-            bullet.transform.position = pointFire.position;
+            if (isLieDown)
+            {
+                bullet.transform.position = pointFireLie.position;
+            }
+            else
+            {
+                bullet.transform.position = pointFireIdle.position;
+            }
+
             BulletPlayer bulletScript = bullet.GetComponent<BulletPlayer>();
 
             if (DirectionBulletFromJoy() == null)
@@ -105,11 +108,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
     
-    
-    public void ScorePlus(float scorePlus)
-    {
-        score += scorePlus;
-    }
     void AutodetectState()
     {
         //this.playerState = Mathf.Abs(this.rg.linearVelocityX) > 0.1f ? PLAYER_STATE.IsRun : PLAYER_STATE.IsIdle;
@@ -125,11 +123,15 @@ public class PlayerControl : MonoBehaviour
         {
             this.playerState = PLAYER_STATE.IsJump;
         }
+        if (this.isLieDown == true)
+        {
+            this.playerState = PLAYER_STATE.IsLieDown;
+        }
     }
     public Vector3? DirectionBulletFromJoy()
     {
         // sử dụng bàn phím
-        /*Vector2 normalized = inputJoy.normalized;
+        Vector2 normalized = inputJoy.normalized;
 
         // Nếu input đúng theo 8 hướng cơ bản (nguyên)
         if (Mathf.Abs(normalized.x) == 1 && normalized.y == 0) // trái/phải
@@ -138,7 +140,7 @@ public class PlayerControl : MonoBehaviour
             return new Vector3(0, normalized.y, 0);
         if (Mathf.Abs(normalized.x) == 1 && Mathf.Abs(normalized.y) == 1) // chéo
             return new Vector3(normalized.x, normalized.y, 0).normalized;
-        */
+        
         //joystickk
         if (inputJoy.sqrMagnitude > 0.01f)
         {
@@ -158,25 +160,21 @@ public class PlayerControl : MonoBehaviour
     }
     void PlayerAction()
     {
-        if (lieAction == null || actAction == null) 
+        if (this.lieAction == null || this.actAction == null) 
             return;
-        if (lieAction.action.WasPressedThisFrame())
+
+        if (this.lieAction.action.WasPressedThisFrame())
         {
-            if (!isLieDown)
-            {
-                isLieDown = true;
-            }
-            else if (isLieDown)
-            {
-                isLieDown = false;
-            }
+            this.isLieDown = !this.isLieDown;
         }
-        this.playerState = isLieDown? PLAYER_STATE.IsLieDown:PLAYER_STATE.IsIdle;
-        Debug.Log("Trang thai NAM:" + isLieDown);
-        if(movementAction.action.WasPressedThisFrame())
+
+        Debug.Log("Trang thai NAM:" + this.isLieDown);
+        
+        if (this.movementAction.action.WasPressedThisFrame())
         {
-            isLieDown = false;
+            this.isLieDown = false;
         }
+        //this.playerState = isLieDown? PLAYER_STATE.IsLieDown:PLAYER_STATE.IsIdle;
     }
     public enum PLAYER_STATE
     {

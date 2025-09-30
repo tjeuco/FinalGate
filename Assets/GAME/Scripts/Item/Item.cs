@@ -71,7 +71,8 @@ public abstract class Item : MonoBehaviour
     protected virtual void Reward()
     {
         player.GetComponent<HealthManager>().HeathPlus(heathPlus); 
-        player.ScorePlus(scorePlus); 
+        //player.ScorePlus(scorePlus); 
+        GameManager.Instance.AddScore(scorePlus);
     }
     protected virtual void ExplosionItem()
     {

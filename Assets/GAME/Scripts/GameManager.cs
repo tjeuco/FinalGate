@@ -101,7 +101,7 @@ public class PlayerData
 
     public PlayerData()
     {
-        this.playerName = "No Name";
+        this.playerName = "JoJo";
         this.currentScore = 0;
         this.numberEnemyDie = 0;
         this.positionPlayer = new Vector3(-9f,-0.5f,0f);

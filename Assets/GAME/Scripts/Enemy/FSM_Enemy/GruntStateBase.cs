@@ -2,10 +2,10 @@
 
 public abstract class GruntStateBase
 {
-    protected EnemyGrunt _enemyGrunt;
+    protected EnemyGrunt enemyGrunt;
     protected GruntStateBase(EnemyGrunt enemyGrunt)
     {
-        _enemyGrunt = enemyGrunt;
+        this.enemyGrunt = enemyGrunt;
     }
 
     public abstract void OnEnter();
