@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GruntStateChase : GruntStateBase
 {
@@ -8,7 +8,7 @@ public class GruntStateChase : GruntStateBase
 
     public override void Execute()
     {
-        Debug.Log("Chasing the player!");
+        // lấy khoảng cách đến player
     }
 
     public override void OnEnter()

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f267a9e3bdcc4c45bdead21aa2eab87, type: 3}
+  m_Name: GruntEnemyDataSO
+  m_EditorClassIdentifier: 
+  bulletGruntPrefab: {fileID: 2541250779440282606, guid: 4cc60f125e252f841942148f27d2bce0, type: 3}
+  fireRate: 1
+  shootRange: 5
+  scoreEnemyGrunt: 1
+  speedGrunt: 2
+  distancePatrol: 3

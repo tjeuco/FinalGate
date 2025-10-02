@@ -200,14 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2c257757d0b99048b1c438d1e4b75d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletGrunt: {fileID: 2541250779440282606, guid: 4cc60f125e252f841942148f27d2bce0, type: 3}
-  firePoint: {fileID: 1686711654915037706}
-  fireRate: 1
-  shootRange: 6
-  fireCoolDown: 0
-  scoreEnemyGrunt: 1
-  speedGrunt: 1
-  distance: 5
+  firePointGrunt: {fileID: 1686711654915037706}
+  gruntEnemyDataSO: {fileID: 11400000, guid: 22ef6d4c36d17ff4ba926a3ca585b7f1, type: 2}
 --- !u!114 &9004148917718132641
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class EnemyGrunt : MonoBehaviour, IHitable
 {
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform firePointGrunt;
+    public Transform FirePointGrunt => firePointGrunt;
+
     [SerializeField] private GruntEnemyDataSO gruntEnemyDataSO;
     public GruntEnemyDataSO GruntEnemyDataSO => gruntEnemyDataSO;
     
@@ -24,16 +26,16 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         this.enemyStates.Add(typeof(GruntStateAttack), new GruntStateAttack(this));
         this.enemyStates.Add(typeof(GruntStateChase), new GruntStateChase(this));
         this.enemyStates.Add(typeof(GruntStatePatrol), new GruntStatePatrol(this));
-
-        startPos = this.transform.position;
-        playerPos = FindAnyObjectByType<PlayerControl>();
     }
 
-    public void Start()
+    private void OnEnable()
     {
+        startPos = this.transform.position;
+        playerPos = FindAnyObjectByType<PlayerControl>();
         ChangState(typeof(GruntStatePatrol));
     }
 
+    
     public void ChangState(Type newState)
     {
         if (!this.enemyStates.ContainsKey(newState))
@@ -56,13 +58,6 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         CheckPosEnemy();
     }
 
-    public void ChangeState(GruntStateBase newState)
-    {
-        if (currentEnemyState == newState) return;
-        this.currentEnemyState.OnExit();
-        this.currentEnemyState = newState;
-        this.currentEnemyState.OnEnter();
-    }
     /* void Attack()
     {
         fireCoolDown -= Time.deltaTime;

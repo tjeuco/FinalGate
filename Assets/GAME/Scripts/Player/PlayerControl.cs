@@ -170,7 +170,7 @@ public class PlayerControl : MonoBehaviour
 
         Debug.Log("Trang thai NAM:" + this.isLieDown);
         
-        if (this.movementAction.action.WasPressedThisFrame())
+        if (this.movementAction.action.WasPressedThisFrame() || this.jumpAction.action.WasPressedThisFrame())
         {
             this.isLieDown = false;
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +12,9 @@ public abstract class Item : MonoBehaviour
     private float currentHpItem;
 
     //// phan thuong cho player khi pha huy item
-    [SerializeField] protected float heathPlus = 10f;
-    [SerializeField] protected float scorePlus = 5f;
+    //[SerializeField] protected float heathPlus = 10f;
+    //[SerializeField] protected float scorePlus = 5f;
+    [SerializeField] List<Transform> bonusItemsPrefabs = new List<Transform>();
 
     ////// Item no gay sat thuong cho vat xung quanh
     [SerializeField] protected float damageItem = 10f; //// damage sat thuong
@@ -70,9 +72,9 @@ public abstract class Item : MonoBehaviour
     }
     protected virtual void Reward()
     {
-        player.GetComponent<HealthManager>().HeathPlus(heathPlus); 
+        //player.GetComponent<HealthManager>().HeathPlus(heathPlus); 
         //player.ScorePlus(scorePlus); 
-        GameManager.Instance.AddScore(scorePlus);
+        //GameManager.Instance.AddScore(scorePlus);
     }
     protected virtual void ExplosionItem()
     {
