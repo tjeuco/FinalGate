@@ -27,7 +27,7 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] Transform btnLieDown, btnAct;// bat tat khi khong du dieu khien
 
-    Vector2 inputJoy;
+    Vector3 inputJoy;
 
     [SerializeField] PlayerAnimation anim;
     PLAYER_STATE playerState = PLAYER_STATE.IsIdle;
@@ -73,7 +73,6 @@ public class PlayerControl : MonoBehaviour
                 rg.linearVelocity = new Vector2(rg.linearVelocityX,playerDataSO.jumpForce);
                 playerDataSO.numberJump++;
                 AudioManager.Instance.PlayJumpMusic();
-                //Debug.Log("Jump");
             }
         }
         if (isGround) 

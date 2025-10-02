@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class GruntStatePatrol : GruntStateBase
 {
@@ -12,6 +10,8 @@ public class GruntStatePatrol : GruntStateBase
 
     public override void Execute()
     {
+        Debug.Log("Execute Patrol State");
+
         if (this.enemyGrunt.PlayerPosition == null)
         {
             return;
@@ -38,9 +38,8 @@ public class GruntStatePatrol : GruntStateBase
             }
         }
 
-        if (Vector3.Distance(this.enemyGrunt.transform.position, this.enemyGrunt.PlayerPosition.transform.position) <= this.enemyGrunt.GruntEnemyDataSO.distanceDetectPlayer)
+        if (this.enemyGrunt.DistanceToPlayer() <= this.enemyGrunt.GruntEnemyDataSO.distanceDetectPlayer)
         {
-            //Attack();
             this.enemyGrunt.ChangState(typeof(GruntStateAttack));
         }
     }

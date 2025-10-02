@@ -3573,8 +3573,7 @@ MonoBehaviour:
   maxHpItem: 100
   scoreItem: 5
   effectPerfab: {fileID: 5167530967891170012, guid: 86f304fe353463f4faed0070ae4a3650, type: 3}
-  heathPlus: 10
-  scorePlus: 5
+  bonusItemsPrefabs: []
   damageItem: 10
   radiusDamage: 3
   layerDamage:
@@ -7636,7 +7635,7 @@ MonoBehaviour:
   - {fileID: 73179755}
   - {fileID: 1289831035}
   - {fileID: 1276716172}
-  maxEnemy: 8
+  maxEnemy: 3
   gruntPrefab: {fileID: 1274931970420846683, guid: d73d441b4eff527428c8d8f8a18794e2, type: 3}
   currentEnemy: 0
   timeDelay: 2

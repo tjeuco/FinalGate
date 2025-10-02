@@ -24,7 +24,7 @@ public class EnemyGrunt : MonoBehaviour, IHitable
     private void Awake()
     {
         this.enemyStates.Add(typeof(GruntStateAttack), new GruntStateAttack(this));
-        this.enemyStates.Add(typeof(GruntStateChase), new GruntStateChase(this));
+       // this.enemyStates.Add(typeof(GruntStateChase), new GruntStateChase(this));
         this.enemyStates.Add(typeof(GruntStatePatrol), new GruntStatePatrol(this));
     }
 
@@ -52,8 +52,7 @@ public class EnemyGrunt : MonoBehaviour, IHitable
 
      void Update()
     {
-        currentEnemyState.Execute();
-        
+        currentEnemyState.Execute();        
         //EnemyPatrol();
         CheckPosEnemy();
     }
@@ -121,5 +120,15 @@ public class EnemyGrunt : MonoBehaviour, IHitable
     public int ReturnScoreEnemy()
     {
         return this.gruntEnemyDataSO.scoreEnemyGrunt;
+    }
+
+    public float DistanceToPlayer() // tính khoảng cách đến Player khi đứng ngang hàng
+    {
+        if (Mathf.Abs(this.transform.position.y - this.playerPos.transform.position.y) < 1f)
+        {
+            return Mathf.Abs(this.transform.position.x - this.playerPos.transform.position.x);
+        }
+
+        return Mathf.Infinity;
     }
 }
