@@ -63,7 +63,7 @@ public abstract class Item : MonoBehaviour, IHitable
 
         foreach (Collider2D hit in hits)
         {
-            Debug.Log("Explosion hit: " + hit.name);
+            //Debug.Log("Explosion hit: " + hit.name);
             if (hit.CompareTag("Player"))
             {
                 PlayerControl targetPlayer = hit.GetComponent<PlayerControl>();

@@ -1,9 +1,6 @@
 using UnityEngine;
 
-public class BoxItem : Item, IHitable
+public class BoxItem : Item
 {
-    public void GetHit(float dmg)
-    {
-        base.TakeDamage(dmg);
-    }
+   
 }
