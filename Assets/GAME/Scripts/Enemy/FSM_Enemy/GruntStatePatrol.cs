@@ -21,7 +21,7 @@ public class GruntStatePatrol : GruntStateBase
         float rightBound = this.enemyGrunt.StartPos.x + this.enemyGrunt.GruntEnemyDataSO.distancePatrol;
         if (moveRight)
         {
-            this.enemyGrunt.transform.Translate(Vector3.right * this.enemyGrunt.GruntEnemyDataSO.speedGrunt * Time.deltaTime);
+            this.enemyGrunt.Rg.linearVelocity = Vector3.right * this.enemyGrunt.GruntEnemyDataSO.speedGrunt ;
             if (this.enemyGrunt.transform.position.x >= rightBound)
             {
                 moveRight = false;
@@ -30,7 +30,7 @@ public class GruntStatePatrol : GruntStateBase
         }
         else
         {
-            this.enemyGrunt.transform.Translate(Vector3.left * this.enemyGrunt.GruntEnemyDataSO.speedGrunt * Time.deltaTime);
+            this.enemyGrunt.Rg.linearVelocity = Vector3.left * this.enemyGrunt.GruntEnemyDataSO.speedGrunt;
             if (this.enemyGrunt.transform.position.x <= leftBound)
             {
                 moveRight = true;
@@ -38,7 +38,7 @@ public class GruntStatePatrol : GruntStateBase
             }
         }
 
-        if (this.enemyGrunt.DistanceToPlayer() <= this.enemyGrunt.GruntEnemyDataSO.distanceDetectPlayer)
+        if (this.enemyGrunt.SeePlayer())
         {
             this.enemyGrunt.ChangState(typeof(GruntStateAttack));
         }

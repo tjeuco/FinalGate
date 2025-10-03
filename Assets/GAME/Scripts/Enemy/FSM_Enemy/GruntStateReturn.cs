@@ -8,23 +8,27 @@ public class GruntStateReturn : GruntStateBase //// move ve vi tri ban dau
 
     public override void Execute()
     {
-        if (Mathf.Abs(this.enemyGrunt.transform.position.x - this.enemyGrunt.StartPos.x) > 0.1f)
+        Debug.Log("Execute Return State");
+        if (!this.enemyGrunt.SeePlayer() && Mathf.Abs(this.enemyGrunt.transform.position.x - this.enemyGrunt.StartPos.x) > 0.1f) // khong nhin thay player quay ve vi tri ban dau va patrol
         {
-            if (this.enemyGrunt.transform.position.x > this.enemyGrunt.StartPos.x)
+            var direction = (this.enemyGrunt.StartPos - this.enemyGrunt.transform.position).normalized;
+            this.enemyGrunt.Rg.linearVelocity = direction * this.enemyGrunt.GruntEnemyDataSO.speedGrunt;
+
+            float face = 1f;
+            if (this.enemyGrunt.StartPos.x > this.enemyGrunt.transform.position.x)
             {
-                this.enemyGrunt.transform.localScale = new Vector3(1, 1, 1);
-                this.enemyGrunt.transform.Translate(Vector3.right * this.enemyGrunt.GruntEnemyDataSO.speedGrunt * Time.deltaTime);
+                face = 1f;
             }
             else
             {
-                this.enemyGrunt.transform.localScale = new Vector3(-1, 1, 1);
-                this.enemyGrunt.transform.Translate(Vector3.left * this.enemyGrunt.GruntEnemyDataSO.speedGrunt * Time.deltaTime);
+                face = -1f;
             }
-        } 
+            this.enemyGrunt.transform.localScale = new Vector3(face, 1, 1);
+        }
         else
         {
             this.enemyGrunt.ChangState(typeof(GruntStatePatrol));
-        }    
+        }
     }
 
     public override void OnEnter()

@@ -2,18 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Item : MonoBehaviour
+public abstract class Item : MonoBehaviour, IHitable
 {
     [SerializeField] private Image hpBar;
-    [SerializeField] protected float maxHpItem =100f;
+    [SerializeField] protected float maxHpItem =30f;
     [SerializeField] private int scoreItem = 5;
     [SerializeField] private GameObject effectPerfab;
     protected PlayerControl player;
     private float currentHpItem;
 
-    //// phan thuong cho player khi pha huy item
-    //[SerializeField] protected float heathPlus = 10f;
-    //[SerializeField] protected float scorePlus = 5f;
     [SerializeField] List<Transform> bonusItemsPrefabs = new List<Transform>();
 
     ////// Item no gay sat thuong cho vat xung quanh
@@ -27,22 +24,6 @@ public abstract class Item : MonoBehaviour
         UpdateHpBar();
         player = FindAnyObjectByType<PlayerControl>();
     }
-   /* protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision == null) { return; }
-        if (collision.CompareTag("PlayerBullet"))
-        { 
-            BulletPlayer bullet = collision.GetComponent<BulletPlayer>();
-            this.TakeDamage(bullet.GetDamageBulletPlayer());
-        }*/
-
-
-        /*if (collision.CompareTag("GruntBullet"))
-        {
-            GruntBullet bullet = collision.GetComponent<GruntBullet>();
-            this.TakeDamage(bullet.GetDamageBulletGrunt());
-        }
-    }*/
 
     protected virtual void TakeDamage(float damage)
     {
@@ -96,7 +77,6 @@ public abstract class Item : MonoBehaviour
                 EnemyGrunt enemy = hit.GetComponent<EnemyGrunt>();
                 if (enemy != null)
                 {
-                    //enemy.TakeDamage(damageItem);
                     enemy.GetComponent<HealthManager>().TakeDamage(damageItem);
                 }
             }
@@ -107,5 +87,10 @@ public abstract class Item : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radiusDamage);
+    }
+
+    public void GetHit(float dmg)
+    {
+        this.TakeDamage(dmg);
     }
 }

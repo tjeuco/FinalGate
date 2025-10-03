@@ -8,6 +8,9 @@ public class EnemyGrunt : MonoBehaviour, IHitable
     [SerializeField] private Transform firePointGrunt;
     public Transform FirePointGrunt => firePointGrunt;
 
+    private Rigidbody2D rg;
+    public Rigidbody2D Rg => rg;
+
     [SerializeField] private GruntEnemyDataSO gruntEnemyDataSO;
     public GruntEnemyDataSO GruntEnemyDataSO => gruntEnemyDataSO;
     
@@ -24,14 +27,15 @@ public class EnemyGrunt : MonoBehaviour, IHitable
     private void Awake()
     {
         this.enemyStates.Add(typeof(GruntStateAttack), new GruntStateAttack(this));
-       // this.enemyStates.Add(typeof(GruntStateChase), new GruntStateChase(this));
         this.enemyStates.Add(typeof(GruntStatePatrol), new GruntStatePatrol(this));
+        this.enemyStates.Add(typeof(GruntStateReturn), new GruntStateReturn(this));
     }
 
     private void OnEnable()
     {
         startPos = this.transform.position;
         playerPos = FindAnyObjectByType<PlayerControl>();
+        rg = GetComponent<Rigidbody2D>();
         ChangState(typeof(GruntStatePatrol));
     }
 
@@ -122,13 +126,14 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         return this.gruntEnemyDataSO.scoreEnemyGrunt;
     }
 
-    public float DistanceToPlayer() // tính khoảng cách đến Player khi đứng ngang hàng
+    public bool SeePlayer() // tính khoảng cách đến Player khi đứng ngang hàng
     {
-        if (Mathf.Abs(this.transform.position.y - this.playerPos.transform.position.y) < 1f)
-        {
-            return Mathf.Abs(this.transform.position.x - this.playerPos.transform.position.x);
-        }
-
-        return Mathf.Infinity;
+        var yOffset = Mathf.Abs(this.transform.position.y - this.playerPos.transform.position.y);
+        var dir = (this.playerPos.transform.position - this.transform.position).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, dir, this.gruntEnemyDataSO.distanceDetectPlayer);
+        Debug.DrawRay(this.transform.position, dir * 10f, Color.red);
+        if (yOffset < 1f && hit.collider != null && hit.collider.CompareTag("Player"))
+            return true;
+        return false;
     }
 }
