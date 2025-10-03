@@ -76,7 +76,6 @@ public class HealthManager : MonoBehaviour
         if (this.gameObject.CompareTag("Player"))
         {
             UIManager.Instance.ShowCanvas(UIScreen.GameOver);
-            //this.gameObject.TryGetComponent<PlayerControl>().PLAYhiện thị anim Player Die...
             Time.timeScale = 0; // Dừng game khi player chết
         }
         else if (this.gameObject.CompareTag("Enemy"))

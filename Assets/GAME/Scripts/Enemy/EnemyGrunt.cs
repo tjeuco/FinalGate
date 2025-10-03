@@ -58,7 +58,7 @@ public class EnemyGrunt : MonoBehaviour, IHitable
     {
         currentEnemyState.Execute();        
         //EnemyPatrol();
-        CheckPosEnemy();
+        //CheckPosEnemy();
     }
 
     /* void Attack()
@@ -76,13 +76,13 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         }
     } */
    
-    public void CheckPosEnemy()
+    /*public void CheckPosEnemy()
     {
         if (this.transform.position.y < -20f)
         {
             this.GetComponent<HealthManager>().Die();
         }
-    }
+    } */
 
     
    /* void EnemyPatrol()

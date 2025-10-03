@@ -38,11 +38,14 @@ public abstract class Item : MonoBehaviour, IHitable
     protected virtual void Die()
     {
         GameManager.Instance.AddScore(scoreItem);
-        GameObject effect = Instantiate(effectPerfab,this.transform.position,Quaternion.identity);
+        GameObject effect = Instantiate(effectPerfab,this.transform.position,Quaternion.identity);// sinh effect khi chet
         Destroy(effect,1f);
+
+        GameObject itemBonus = Instantiate(this.ReturnBonusItem(), this.transform.position, Quaternion.identity);// sinh item co thuong
+
         Destroy (gameObject);
         ExplosionItem();
-        Reward();
+       
     }
     protected virtual void UpdateHpBar()
     {
@@ -51,11 +54,10 @@ public abstract class Item : MonoBehaviour, IHitable
             hpBar.fillAmount = currentHpItem / maxHpItem;
         }
     }
-    protected virtual void Reward()
+    protected virtual GameObject ReturnBonusItem()
     {
-        //player.GetComponent<HealthManager>().HeathPlus(heathPlus); 
-        //player.ScorePlus(scorePlus); 
-        //GameManager.Instance.AddScore(scorePlus);
+        int ran = Random.Range(0, bonusItemsPrefabs.Count);
+        return this.bonusItemsPrefabs[ran].gameObject;
     }
     protected virtual void ExplosionItem()
     {
