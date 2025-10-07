@@ -32,7 +32,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         LoadDataPlayer();
-        player.position = this._playerData.positionPlayer;
+        //player.position = this._playerData.positionPlayer;
     }
 
     private void Update()

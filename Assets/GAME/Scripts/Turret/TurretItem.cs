@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TurretItem : Item, IHitable
+public class TurretItem : Item
 {
     
 }

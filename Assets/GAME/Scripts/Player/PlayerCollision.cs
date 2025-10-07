@@ -1,11 +1,89 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private PlayerControl player;
-    void Start()
+
+    [SerializeField] Transform posCarryObj;
+    [SerializeField] float stackOffset = 0.5f;
+    [SerializeField] float offsetPos = 0.5f;
+
+    [SerializeField] List<GameObject> carryObjects = new List<GameObject>();
+    public IReadOnlyList<GameObject> CarryObjects => carryObjects;
+
+    private void Update()
     {
-        player = FindAnyObjectByType<PlayerControl>();
+       this.SortItem();
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        ItemBonus item = collision.GetComponent<ItemBonus>();
+        if (item == null)
+            return;
+
+        switch (item.itemType)
+        {
+            case ItemType.Mine:
+                Debug.Log("Player nhat duoc Mine");
+                this.AddItem(item.gameObject);
+                break;
+            case ItemType.Armo:
+                Debug.Log("Player nhat duoc Armo");
+                Destroy(collision.gameObject);
+                break;
+            case ItemType.Heath:
+                Debug.Log("Player nhat duoc Heath");
+                Destroy(collision.gameObject);
+                break;
+            case ItemType.Power:
+                Debug.Log("Player nhat duoc Power");
+                Destroy(collision.gameObject);
+                break;
+        }
+        //Destroy (collision.gameObject);
+    }
+
+    public void AddItem(GameObject obj)
+    {
+        Rigidbody2D rg = obj.GetComponent<Rigidbody2D>();
+        if (rg != null)
+        {
+            rg.simulated = false;
+        }
+        Collider2D collider2D = obj.GetComponent<Collider2D>();
+        if (collider2D != null)
+        {
+            collider2D.enabled = false;
+        }
+
+        carryObjects.Add(obj);
+        this.SortItem();
+    }
+
+    public void SortItem()
+    {
+        if (carryObjects.Count <= 0)
+            return;
+
+        for (int i = 0; i < carryObjects.Count; i++)
+        {
+            GameObject obj = carryObjects[i];
+            if (obj == null) continue;
+
+            Vector3 offset = new Vector3(0, i * stackOffset, 0);
+            obj.transform.position = posCarryObj.position + offset;
+        }
+    }
+
+
+    public void DropItem(GameObject obj)
+    {
+        if (carryObjects.Count <=0) 
+            return;
+        carryObjects.Remove(obj);
+        obj.transform.position = this.transform.position + new Vector3(offsetPos, 0,0);
+        this.SortItem();
     }
 }

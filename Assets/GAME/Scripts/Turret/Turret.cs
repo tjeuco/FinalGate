@@ -2,13 +2,14 @@
 
 public class Turret : MonoBehaviour
 {
-    [SerializeField] private Transform gun; // Gán object nòng súng ở đây
+    [SerializeField] private Transform gun;
     [SerializeField] private Sprite[] spritesByAngle; // Gán các sprite theo góc
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint; // Điểm bắn đạn
     [SerializeField] private float shootDelay = 1f;
     [SerializeField] private GameObject turret;
     [SerializeField] private float speedBullet = 10f;
+
     private Transform player;
     private float shootTimer = 0f;
 
@@ -38,7 +39,7 @@ public class Turret : MonoBehaviour
         Vector3 direction = player.position - gun.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        //gun.rotation = Quaternion.Euler(0, 0, angle); // Quay nòng súng
+
 
         UpdateGunSprite(angle);
 
@@ -46,7 +47,7 @@ public class Turret : MonoBehaviour
         shootTimer += Time.deltaTime;
         if (shootTimer >= shootDelay)
         {
-            Shoot2();
+            Shoot();
             shootTimer = 0f;
         }
     }
@@ -83,6 +84,4 @@ public class Turret : MonoBehaviour
         turret.GetComponent<SpriteRenderer>().sprite = spritesByAngle[index];
         //Debug.Log("Goc quay:" + angle +" Index: " + index); 
     }
-
-
 }

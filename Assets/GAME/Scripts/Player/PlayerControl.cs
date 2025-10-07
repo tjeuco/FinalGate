@@ -15,7 +15,8 @@ public class PlayerControl : MonoBehaviour
 
     private bool isGround = false;
     private Rigidbody2D rg;
-    
+
+    private PlayerCollision playerCollision;
     private bool isLieDown = false;
 
     [Header("-----Actions------")]
@@ -33,11 +34,15 @@ public class PlayerControl : MonoBehaviour
     PLAYER_STATE playerState = PLAYER_STATE.IsIdle;
     public PLAYER_STATE PlayerState => playerState;
 
+    private bool activeMine = false; //// bien kich no min
+    public bool ActiveMine => activeMine;
+
     void Start()
     {
         isLieDown =false;  
         this.rg = GetComponent<Rigidbody2D>();
         this.anim = GetComponentInChildren<PlayerAnimation>();
+        this.playerCollision = GetComponent<PlayerCollision>();
     }
 
     void Update()
@@ -103,13 +108,12 @@ public class PlayerControl : MonoBehaviour
                 bulletScript.SetDirectionBullet((Vector3)DirectionBulletFromJoy());
             
             AudioManager.Instance.PlayBulletMusic();
-            //Debug.Log("Shoot");
         }
     }
     
     void AutodetectState()
     {
-        //this.playerState = Mathf.Abs(this.rg.linearVelocityX) > 0.1f ? PLAYER_STATE.IsRun : PLAYER_STATE.IsIdle;
+
         if (Mathf.Abs(this.rg.linearVelocityX) > 0.1f)
         {
             this.playerState = PLAYER_STATE.IsRun;
@@ -130,15 +134,15 @@ public class PlayerControl : MonoBehaviour
     public Vector3? DirectionBulletFromJoy()
     {
         // sử dụng bàn phím
-        Vector2 normalized = inputJoy.normalized;
+        Vector2 dir = inputJoy.normalized;
 
         // Nếu input đúng theo 8 hướng cơ bản (nguyên)
-        if (Mathf.Abs(normalized.x) == 1 && normalized.y == 0) // trái/phải
-            return new Vector3(normalized.x, 0, 0);
-        if (Mathf.Abs(normalized.y) == 1 && normalized.x == 0) // lên/xuống
-            return new Vector3(0, normalized.y, 0);
-        if (Mathf.Abs(normalized.x) == 1 && Mathf.Abs(normalized.y) == 1) // chéo
-            return new Vector3(normalized.x, normalized.y, 0).normalized;
+        if (Mathf.Abs(dir.x) == 1 && dir.y == 0) // trái/phải
+            return new Vector3(dir.x, 0, 0);
+        if (Mathf.Abs(dir.y) == 1 && dir.x == 0) // lên/xuống
+            return new Vector3(0, dir.y, 0);
+        if (Mathf.Abs(dir.x) == 1 && Mathf.Abs(dir.y) == 1) // chéo
+            return new Vector3(dir.x, dir.y, 0).normalized;
         
         //joystickk
         if (inputJoy.sqrMagnitude > 0.01f)
@@ -162,25 +166,41 @@ public class PlayerControl : MonoBehaviour
         if (this.lieAction == null || this.actAction == null) 
             return;
 
-        if (this.lieAction.action.WasPressedThisFrame())
+        if (this.lieAction.action.WasPressedThisFrame() && isGround)
         {
             this.isLieDown = !this.isLieDown;
         }
-
-        Debug.Log("Trang thai NAM:" + this.isLieDown);
         
         if (this.movementAction.action.WasPressedThisFrame() || this.jumpAction.action.WasPressedThisFrame())
         {
             this.isLieDown = false;
         }
-        //this.playerState = isLieDown? PLAYER_STATE.IsLieDown:PLAYER_STATE.IsIdle;
+
+        /////// Dat min
+        if (this.actAction.action.WasPressedThisFrame())
+        {
+            if (this.playerCollision.CarryObjects.Count <= 0)
+            {
+                return;
+            }
+            var itemDrop = this.playerCollision.CarryObjects[0];
+            if (itemDrop != null)
+            {
+                this.playerCollision.DropItem(itemDrop);
+                this.activeMine = true;
+                Debug.Log("Drop Item:" + itemDrop.name);
+            }
+
+        }
+
+
     }
     public enum PLAYER_STATE
     {
-        IsIdle = 0,
-        IsRun = 1,
-        IsJump = 2,
-        IsLieDown = 3,
-        IsDie = 4
+        IsIdle,
+        IsRun,
+        IsJump,
+        IsLieDown,
+        IsDie
     }
 }

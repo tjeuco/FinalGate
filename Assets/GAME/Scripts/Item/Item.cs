@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public abstract class Item : MonoBehaviour, IHitable
 {
-    [SerializeField] private Image hpBar;
+
     [SerializeField] protected float maxHpItem =30f;
     [SerializeField] private int scoreItem = 5;
     [SerializeField] private GameObject effectPerfab;
@@ -21,7 +21,6 @@ public abstract class Item : MonoBehaviour, IHitable
     protected virtual void Start()
     {
         currentHpItem  = maxHpItem;
-        UpdateHpBar();
         player = FindAnyObjectByType<PlayerControl>();
     }
 
@@ -29,7 +28,6 @@ public abstract class Item : MonoBehaviour, IHitable
     {
         currentHpItem -= damage;
         currentHpItem = Mathf.Max(currentHpItem, 0);
-        UpdateHpBar();
         if (currentHpItem <= 0)
         {
             Die();
@@ -38,26 +36,30 @@ public abstract class Item : MonoBehaviour, IHitable
     protected virtual void Die()
     {
         GameManager.Instance.AddScore(scoreItem);
-        GameObject effect = Instantiate(effectPerfab,this.transform.position,Quaternion.identity);// sinh effect khi chet
-        Destroy(effect,1f);
 
-        GameObject itemBonus = Instantiate(this.ReturnBonusItem(), this.transform.position, Quaternion.identity);// sinh item co thuong
+        if (effectPerfab != null)
+        {
+            GameObject effect = Instantiate(effectPerfab, this.transform.position, Quaternion.identity);// sinh effect khi chet
+            Destroy(effect, 1f);
+        }
 
-        Destroy (gameObject);
+        var itemInstantiate = this.ReturnBonusItem();
+        if (itemInstantiate != null)
+        {
+            GameObject itemBonus = Instantiate(this.ReturnBonusItem(), this.transform.position, Quaternion.identity);// sinh item co thuong
+        }
+        Destroy(gameObject);
         ExplosionItem();
        
     }
-    protected virtual void UpdateHpBar()
-    {
-        if (hpBar != null)
-        {
-            hpBar.fillAmount = currentHpItem / maxHpItem;
-        }
-    }
+   
+
     protected virtual GameObject ReturnBonusItem()
     {
-        int ran = Random.Range(0, bonusItemsPrefabs.Count);
-        return this.bonusItemsPrefabs[ran].gameObject;
+        if (bonusItemsPrefabs.Count == 0)
+            return null;
+        int indexItem = Random.Range(0, bonusItemsPrefabs.Count);
+        return this.bonusItemsPrefabs[indexItem].gameObject;
     }
     protected virtual void ExplosionItem()
     {
@@ -65,7 +67,7 @@ public abstract class Item : MonoBehaviour, IHitable
 
         foreach (Collider2D hit in hits)
         {
-            //Debug.Log("Explosion hit: " + hit.name);
+
             if (hit.CompareTag("Player"))
             {
                 PlayerControl targetPlayer = hit.GetComponent<PlayerControl>();
