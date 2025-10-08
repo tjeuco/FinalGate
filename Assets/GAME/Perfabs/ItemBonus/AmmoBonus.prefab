@@ -103,6 +103,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 0
+  timeActiveMine: 5
+  radiusExplosion: 5
+  damageMine: 30
+  layerDamage:
+    serializedVersion: 2
+    m_Bits: 192
+  explosionPrefab: {fileID: 5167530967891170012, guid: 77dcbee243822a945998f4ac90494ebb, type: 3}
 --- !u!61 &1280499623826781193
 BoxCollider2D:
   m_ObjectHideFlags: 0

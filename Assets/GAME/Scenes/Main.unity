@@ -547,6 +547,7 @@ GameObject:
   - component: {fileID: 95074671}
   - component: {fileID: 95074670}
   - component: {fileID: 95074672}
+  - component: {fileID: 95074673}
   m_Layer: 6
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -658,6 +659,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ae553219002f74eba75d551b78e58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &95074673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95074668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3f039805e1243478878fc756b613fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkInterval: 0.05
 --- !u!1 &122483370
 GameObject:
   m_ObjectHideFlags: 0
@@ -8534,26 +8548,6 @@ PrefabInstance:
     - target: {fileID: 5200334042076375296, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
       propertyPath: m_Name
       value: MineBonus
-      objectReference: {fileID: 0}
-    - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
-      propertyPath: timeDelay
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
-      propertyPath: damageMine
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
-      propertyPath: explosionPrefab
-      value: 
-      objectReference: {fileID: 5167530967891170012, guid: 77dcbee243822a945998f4ac90494ebb, type: 3}
-    - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
-      propertyPath: radiusExplosion
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
-      propertyPath: layerDamage.m_Bits
-      value: 192
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

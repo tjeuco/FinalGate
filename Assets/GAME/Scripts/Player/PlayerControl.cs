@@ -189,7 +189,6 @@ public class PlayerControl : MonoBehaviour, IHitable
                 itemDrop.GetComponent<ItemBonus>()?.SetActiveMine();
                 Debug.Log("Drop Item:" + itemDrop.name);
             }
-
         }
 
 

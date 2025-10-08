@@ -20,10 +20,6 @@ public class ItemBonus : MonoBehaviour
     }
     private void Update()
     {
-        if (this.activeMine == true)
-        {
-            this.timer += Time.deltaTime;
-        }
         this.ActiveMine(activeMine);
     }
 
@@ -36,6 +32,7 @@ public class ItemBonus : MonoBehaviour
     {
         if (inActive == false) 
             return;
+        this.timer += Time.deltaTime;
         if (this.timer >= this.timeActiveMine)
         {
 
@@ -45,6 +42,8 @@ public class ItemBonus : MonoBehaviour
             GameObject explo = Instantiate(explosionPrefab,this.transform.position,Quaternion.identity);
             Destroy(explo,2f);
             Destroy(this.gameObject);
+
+            this.activeMine = false;
 
             Collider2D[] hits = Physics2D.OverlapCircleAll(this.transform.position, radiusExplosion, layerDamage);
             foreach (Collider2D hit in hits)
