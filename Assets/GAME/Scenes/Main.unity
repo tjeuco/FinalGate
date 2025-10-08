@@ -2245,7 +2245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 560265300}
   - component: {fileID: 560265302}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3440,7 +3440,7 @@ GameObject:
   - component: {fileID: 967515826}
   - component: {fileID: 967515828}
   - component: {fileID: 967515829}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Turret
   m_TagString: Turret
   m_Icon: {fileID: 0}
@@ -7305,6 +7305,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 1.16
       objectReference: {fileID: 0}
+    - target: {fileID: 3376389121670762129, guid: 7eed8215ef2f32f4ca74d6f35f1b1b43, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3715006756741072913, guid: 7eed8215ef2f32f4ca74d6f35f1b1b43, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4296311869622010717, guid: 7eed8215ef2f32f4ca74d6f35f1b1b43, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0
@@ -7405,9 +7413,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7927870687285278325, guid: 7eed8215ef2f32f4ca74d6f35f1b1b43, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 8702486451612223017, guid: 7eed8215ef2f32f4ca74d6f35f1b1b43, type: 3}
       propertyPath: m_Name
       value: HpBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 8702486451612223017, guid: 7eed8215ef2f32f4ca74d6f35f1b1b43, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8520,9 +8536,25 @@ PrefabInstance:
       value: MineBonus
       objectReference: {fileID: 0}
     - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
+      propertyPath: timeDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
+      propertyPath: damageMine
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
       propertyPath: explosionPrefab
       value: 
       objectReference: {fileID: 5167530967891170012, guid: 77dcbee243822a945998f4ac90494ebb, type: 3}
+    - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
+      propertyPath: radiusExplosion
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6585938501641530065, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
+      propertyPath: layerDamage.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

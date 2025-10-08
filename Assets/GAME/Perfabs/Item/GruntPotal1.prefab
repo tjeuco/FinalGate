@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5125237372701384787}
   - component: {fileID: 7333591255735078468}
   - component: {fileID: 2153359269052842383}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: GruntPotal1
   m_TagString: GruntPotal
   m_Icon: {fileID: 0}

@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour, IHitable
 {
     [SerializeField] private Transform pointCheckGround;
     [SerializeField] private Transform pointFireIdle;
@@ -34,8 +34,7 @@ public class PlayerControl : MonoBehaviour
     PLAYER_STATE playerState = PLAYER_STATE.IsIdle;
     public PLAYER_STATE PlayerState => playerState;
 
-    private bool activeMine = false; //// bien kich no min
-    public bool ActiveMine => activeMine;
+
 
     void Start()
     {
@@ -187,7 +186,7 @@ public class PlayerControl : MonoBehaviour
             if (itemDrop != null)
             {
                 this.playerCollision.DropItem(itemDrop);
-                this.activeMine = true;
+                itemDrop.GetComponent<ItemBonus>()?.SetActiveMine();
                 Debug.Log("Drop Item:" + itemDrop.name);
             }
 
@@ -195,6 +194,12 @@ public class PlayerControl : MonoBehaviour
 
 
     }
+
+    public void GetHit(float dmg)
+    {
+        this.GetComponent<HealthManager>().TakeDamage(dmg);
+    }
+
     public enum PLAYER_STATE
     {
         IsIdle,

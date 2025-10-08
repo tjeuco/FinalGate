@@ -5,42 +5,55 @@ public class ItemBonus : MonoBehaviour
     public ItemType itemType;
     private Rigidbody2D rg;
 
-    [SerializeField] private float timeDelay = 3f;
+    [SerializeField] private float timeActiveMine = 5f;
     [SerializeField] private float radiusExplosion = 4f;
     [SerializeField] private float damageMine = 20f;
     [SerializeField] LayerMask layerDamage;
     [SerializeField] GameObject explosionPrefab;
 
     private float timer;
-    private PlayerControl playerControl;
+    private bool activeMine = false; //// bien kich no min
     private void OnEnable()
     {
         this.rg = GetComponent<Rigidbody2D>();
         rg.gravityScale = 0f;
-        this.playerControl = this.GetComponentInParent<PlayerControl>();
     }
     private void Update()
     {
-        this.timer += Time.deltaTime;
-        this.ActiveMine(this.playerControl.ActiveMine);
+        if (this.activeMine == true)
+        {
+            this.timer += Time.deltaTime;
+        }
+        this.ActiveMine(activeMine);
+    }
+
+    public void SetActiveMine()
+    {
+        this.activeMine = true;
+        this.timer = 0f;    
     }
     public void ActiveMine(bool inActive)
     {
         if (inActive == false) 
             return;
-        if (this.timer >= this.timeDelay)
+        if (this.timer >= this.timeActiveMine)
         {
+
             Debug.Log("Thoi gian no min:" +  this.timer);
             if (this.explosionPrefab == null)
                 return;
             GameObject explo = Instantiate(explosionPrefab,this.transform.position,Quaternion.identity);
-            Destroy(explo);
+            Destroy(explo,2f);
             Destroy(this.gameObject);
 
             Collider2D[] hits = Physics2D.OverlapCircleAll(this.transform.position, radiusExplosion, layerDamage);
             foreach (Collider2D hit in hits)
             {
-                hit.GetComponent<HealthManager>().TakeDamage(damageMine);
+                var getHit = hit.GetComponent<IHitable>();
+                if (getHit != null)
+                {
+                    getHit.GetHit(damageMine);
+                }
             }
         }
     }

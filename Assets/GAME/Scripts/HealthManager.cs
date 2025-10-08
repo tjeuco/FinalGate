@@ -69,6 +69,7 @@ public class HealthManager : MonoBehaviour
         UpdateHpBar();
         CheckPos();
     }
+
     public void Die()
     {
         //Destroy(this.gameObject);
@@ -89,14 +90,15 @@ public class HealthManager : MonoBehaviour
         }
         sliderHpBar.gameObject.SetActive(false);
     }
+
     public void UpdateHpBar()
     {
-
         if (sliderHpBar == null) return;
         Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position + new Vector3(0, 1f, 0));
         sliderHpBar.transform.position = screenPos;
         sliderHpBar.value = (currentHp / maxHp) * 100;
     }
+
     public void HeathPlus(float heathPlus)
     {
         currentHp += heathPlus;
