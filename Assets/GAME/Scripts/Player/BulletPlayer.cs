@@ -5,7 +5,7 @@ public class BulletPlayer : MonoBehaviour
     [SerializeField] private GameObject bulletEffect;
     [SerializeField] private float speedBullet = 10f;
     [SerializeField] private float damageBullet = 15f;
-    [SerializeField] private float maxDistance = 10f;
+    [SerializeField] private float maxDistance = 50f;
 
     private Vector3 moveDirection;
     private float posStart;

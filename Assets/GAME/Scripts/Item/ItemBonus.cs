@@ -40,6 +40,7 @@ public class ItemBonus : MonoBehaviour
             if (this.explosionPrefab == null)
                 return;
             GameObject explo = Instantiate(explosionPrefab,this.transform.position,Quaternion.identity);
+            AudioManager.Instance.PlayExplosionMusic();
             Destroy(explo,2f);
             Destroy(this.gameObject);
 

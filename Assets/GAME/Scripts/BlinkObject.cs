@@ -3,21 +3,38 @@
 public class BlinkObject : MonoBehaviour
 {
     [SerializeField] private float blinkInterval = 0.1f; // thời gian giữa 2 lần nhấp nháy
+    [SerializeField] private float blinkDuration = 3f; // tổng thời gian nhấp nháy
     private Renderer render;
-    private float timer;
+    private float timerInterval = 0f;
+    private float timerDuration = 0f;
 
-    void Start()
+    void OnEnable()
     {
-        render = GetComponent<Renderer>();
+        this.render = GetComponent<Renderer>();
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= blinkInterval)
+        this.timerInterval += Time.deltaTime;
+        this.timerDuration += Time.deltaTime;
+        if (this.timerDuration < this.blinkDuration)
+        {
+            this.Blinking();
+        }
+        else
+        {
+            this.GetComponent<BlinkObject>().enabled = false;
+        }
+        
+    }
+
+    public void Blinking()
+    {
+        Debug.Log("Blinking...");
+        if (timerInterval >= blinkInterval)
         {
             render.enabled = !render.enabled; // bật/tắt hiển thị
-            timer = 0f;
+            timerInterval = 0f;
         }
     }
 }

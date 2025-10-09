@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4091298362998930189}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.24, y: -3.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -105,7 +105,11 @@ MonoBehaviour:
   maxHpItem: 100
   scoreItem: 5
   effectPerfab: {fileID: 5167530967891170012, guid: 86f304fe353463f4faed0070ae4a3650, type: 3}
-  bonusItemsPrefabs: []
+  bonusItemsPrefabs:
+  - {fileID: 529436815817739445, guid: a55faae17cd4d404692fcbb28c1cb469, type: 3}
+  - {fileID: 741561998399567167, guid: 2246ee4ad604e4f49a49523a2b7a753b, type: 3}
+  - {fileID: 5414262355339027596, guid: ca28cdadf62f2eb48ab87ce8b4055401, type: 3}
+  - {fileID: 1305594473715013547, guid: 44584f69d19a16043857d2b9b30e74a3, type: 3}
   damageItem: 50
   radiusDamage: 3
   layerDamage:

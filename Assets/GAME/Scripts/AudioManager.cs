@@ -9,6 +9,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private AudioClip backgroundClip;
     [SerializeField] private AudioClip bulletClip;
     [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip explosionClip;
 
     void Start()
     {
@@ -27,5 +28,10 @@ public class AudioManager : Singleton<AudioManager>
     public void PlayJumpMusic()
     {
         effectAudioSource.PlayOneShot(jumpClip);
+    }
+
+    public void PlayExplosionMusic()
+    {
+        effectAudioSource.PlayOneShot(explosionClip);
     }
 }

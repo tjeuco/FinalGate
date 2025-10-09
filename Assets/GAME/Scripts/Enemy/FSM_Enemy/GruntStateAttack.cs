@@ -10,8 +10,7 @@ public class GruntStateAttack : GruntStateBase
 
     public override void Execute()
     {
-        Debug.Log("Execute Attack Sate");
-        Debug.Log("Enemy co thay player ko?" + this.enemyGrunt.SeePlayer());
+        
         fireCoolDown -= Time.deltaTime;
 
         // Enemy dduoir theo player
@@ -26,11 +25,7 @@ public class GruntStateAttack : GruntStateBase
         }
         this.enemyGrunt.transform.localScale = new Vector3(face, 1, 1);
 
-        if (this.enemyGrunt.SeePlayer())
-        {
-            this.enemyGrunt.Rg.linearVelocity = new Vector3(face * this.enemyGrunt.GruntEnemyDataSO.speedGrunt, this.enemyGrunt.Rg.linearVelocityY);
-        }
-        else
+        if (!this.enemyGrunt.SeePlayer()) // ko thay player thi quay ve vi tri ban dau
         {
             this.enemyGrunt.ChangState(typeof(GruntStateReturn));
         }

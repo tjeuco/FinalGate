@@ -10,7 +10,6 @@ public class PlayerControl : MonoBehaviour, IHitable
     [SerializeField] private Transform pointFireLie;
     [SerializeField] private LayerMask layerGroundCheck;
     [SerializeField] private GameObject bulletPrefab;
-
     [SerializeField] private PlayerDataSO playerDataSO;
 
     private bool isGround = false;
@@ -30,10 +29,10 @@ public class PlayerControl : MonoBehaviour, IHitable
 
     Vector3 inputJoy;
 
-    [SerializeField] PlayerAnimation anim;
+    PlayerAnimation anim;
+
     PLAYER_STATE playerState = PLAYER_STATE.IsIdle;
     public PLAYER_STATE PlayerState => playerState;
-
 
 
     void Start()

@@ -41,6 +41,7 @@ public abstract class Item : MonoBehaviour, IHitable
         {
             GameObject effect = Instantiate(effectPerfab, this.transform.position, Quaternion.identity);// sinh effect khi chet
             Destroy(effect, 1f);
+            AudioManager.Instance.PlayExplosionMusic();
         }
 
         var itemInstantiate = this.ReturnBonusItem();

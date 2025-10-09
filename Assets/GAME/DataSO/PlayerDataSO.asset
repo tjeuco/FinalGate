@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   jumpForce: 10
-  numberJump: 2
-  maxHp: 500
+  numberJump: 1
+  speedBullet: 20
+  maxHp: 100

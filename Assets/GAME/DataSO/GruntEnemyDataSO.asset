@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GruntEnemyDataSO
   m_EditorClassIdentifier: 
   bulletGruntPrefab: {fileID: 2541250779440282606, guid: 4cc60f125e252f841942148f27d2bce0, type: 3}
-  fireRate: 1
-  shootRange: 5
+  fireRate: 0.3
+  distanceDetectPlayer: 8
   scoreEnemyGrunt: 1
   speedGrunt: 2
   distancePatrol: 3
