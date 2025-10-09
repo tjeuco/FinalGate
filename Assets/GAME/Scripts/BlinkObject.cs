@@ -23,6 +23,7 @@ public class BlinkObject : MonoBehaviour
         }
         else
         {
+            this.render.enabled = true; // đảm bảo đối tượng hiển thị sau khi nhấp nháy xong
             this.GetComponent<BlinkObject>().enabled = false;
         }
         
@@ -33,8 +34,8 @@ public class BlinkObject : MonoBehaviour
         Debug.Log("Blinking...");
         if (timerInterval >= blinkInterval)
         {
-            render.enabled = !render.enabled; // bật/tắt hiển thị
-            timerInterval = 0f;
+            this.render.enabled = !render.enabled; // bật/tắt hiển thị
+            this.timerInterval = 0f;
         }
     }
 }

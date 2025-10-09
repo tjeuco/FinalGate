@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using UnityEngine.UI;
 
@@ -13,8 +13,13 @@ public class GameManager : Singleton<GameManager>
 
     [Header("-----UIManager-----")]
     [SerializeField] Text textScore;
-    [SerializeField] Text textFPS;
+    [SerializeField] Text textTimePlay;
     [SerializeField] Text textMessage;
+
+    ////// thời gian chơi
+    private float startTime;
+    private int minutesTimePlay;
+    private int secondsTimePlay;
 
     public int Score => _playerData.currentScore;
 
@@ -32,13 +37,16 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         LoadDataPlayer();
-        //player.position = this._playerData.positionPlayer;
+        this.startTime = Time.time;
     }
 
     private void Update()
     {
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
         this._playerData.positionPlayer = player.position;
+
+        //// hiện thời gian
+        this.TimePlay();
     }
     public void AddScore(params object[] datas)
     {
@@ -82,12 +90,13 @@ public class GameManager : Singleton<GameManager>
         PlayerData playerData = new PlayerData();
     }
 
-    /////////////////////////////////////// Hien thi FPS//////////////////////////////////////
-    void OnGUI()
+    /////////////////////////////////////// Timer//////////////////////////////////////
+    void TimePlay()
     {
-        float fps = 1.0f / deltaTime;
-        string text = string.Format("FPS: {0:0.}", fps);
-        this.textFPS.text = text;
+        float t = Time.time - startTime;
+        minutesTimePlay = (int)t / 60;
+        secondsTimePlay = (int)t % 60;
+        this.textTimePlay.text = string.Format("Time: " + "{0:00}:{1:00}", minutesTimePlay, secondsTimePlay);
     }
 }
 [System.Serializable]

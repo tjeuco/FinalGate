@@ -47,12 +47,15 @@ public class PlayerControl : MonoBehaviour, IHitable
     {
         this.anim.updateInputY(inputJoy.y);
 
-        PlayerMove();
-        PlayerJump();
         PlayerShoot();
         AutodetectState();
         PlayerAction();
+        PlayerJump();
+    }
 
+    void FixedUpdate()
+    {
+        PlayerMove();
     }
 
     void PlayerMove()
@@ -68,7 +71,7 @@ public class PlayerControl : MonoBehaviour, IHitable
     }
     void PlayerJump()
     {
-        isGround = Physics2D.OverlapCircle(pointCheckGround.position, 0.1f, layerGroundCheck);
+        isGround = Physics2D.OverlapCircle(pointCheckGround.position, 0.2f, layerGroundCheck);
         if (jumpAction.action.WasPressedThisFrame())
         {
             if (playerDataSO.numberJump < 2)
