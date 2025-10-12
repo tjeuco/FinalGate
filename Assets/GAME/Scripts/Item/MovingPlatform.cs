@@ -7,7 +7,6 @@ public class MovingPlatform : MonoBehaviour
 
     private Vector3 lastPos;
     private Vector3 target;
-    private bool playerOnPlatform = false;
     private Transform player;
     private bool playerOnTop = false;
 
@@ -58,7 +57,6 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            this.playerOnPlatform = false;
             this.player = null;
         }
     }

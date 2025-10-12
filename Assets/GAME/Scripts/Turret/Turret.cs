@@ -39,8 +39,6 @@ public class Turret : MonoBehaviour
         Vector3 direction = player.position - gun.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-
-
         UpdateGunSprite(angle);
 
         // Bắn đạn mỗi X giây
@@ -54,6 +52,7 @@ public class Turret : MonoBehaviour
 
     void Shoot()
     {
+        Debug.Log("Shoot...");
         Vector3 dir = directionsByAngle[currentSpriteIndex];
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         bullet.GetComponent<Rigidbody2D>().linearVelocity = dir * speedBullet; // tốc độ đạn
