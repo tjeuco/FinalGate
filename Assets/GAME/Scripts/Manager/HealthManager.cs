@@ -82,6 +82,10 @@ public class HealthManager : MonoBehaviour
         else if (this.gameObject.CompareTag("Enemy"))
         {
             EnemyGruntSpawner numberEnemy = FindAnyObjectByType<EnemyGruntSpawner>();
+            if (numberEnemy == null)
+            {
+                return;
+            }
             numberEnemy.currentEnemy--; // giảm số lượng enemy hiện có trên scens
 
             ObserverManager.Notify(ObserverKey.addScore, this.GetComponent<EnemyGrunt>().ReturnScoreEnemy());

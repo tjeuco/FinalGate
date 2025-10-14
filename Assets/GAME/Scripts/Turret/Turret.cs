@@ -81,6 +81,5 @@ public class Turret : MonoBehaviour
         int index = Mathf.RoundToInt(angle / (360f / spritesByAngle.Length)) % spritesByAngle.Length;
         currentSpriteIndex = index;
         turret.GetComponent<SpriteRenderer>().sprite = spritesByAngle[index];
-        //Debug.Log("Goc quay:" + angle +" Index: " + index); 
     }
 }

@@ -201,7 +201,7 @@ MonoBehaviour:
   - {fileID: 8083502946490381284, guid: 21ceec4afe3526e4abb009c78291ebfb, type: 3}
   - {fileID: 1041244772807654819, guid: 21ceec4afe3526e4abb009c78291ebfb, type: 3}
   - {fileID: 4653072018584617916, guid: 21ceec4afe3526e4abb009c78291ebfb, type: 3}
-  bulletPrefab: {fileID: 2541250779440282606, guid: 4cc60f125e252f841942148f27d2bce0, type: 3}
+  bulletPrefab: {fileID: 5370740384503794801, guid: a0e6ac0ca10f3a7478b4de11574b2e7b, type: 3}
   firePoint: {fileID: 6677692530611381620}
   shootDelay: 3
   turret: {fileID: 6991845403403254984}
