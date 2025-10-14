@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemyGrunt : MonoBehaviour, IHitable
 {
@@ -132,7 +131,7 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         var dir = (this.playerPos.transform.position - this.transform.position).normalized;
         RaycastHit2D hit = Physics2D.Raycast(this.transform.position, dir, this.gruntEnemyDataSO.distanceDetectPlayer);
         Debug.DrawRay(this.transform.position, dir * 10f, Color.red);
-        if (yOffset < 1f && hit.collider != null && hit.collider.CompareTag("Player"))
+        if (yOffset < 3f && hit.collider != null && hit.collider.CompareTag("Player"))
             return true;
         return false;
     }

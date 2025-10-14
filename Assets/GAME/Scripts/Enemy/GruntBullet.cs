@@ -8,13 +8,11 @@ public class GruntBullet : MonoBehaviour
     [SerializeField] private float maxDistance = 10f;
 
     private Vector3 movement;
-    private GruntBulletPooling poolBulletGrunt;
     private Vector3 PosXStart;
     private PlayerControl player;
 
     void Start()
     {
-        poolBulletGrunt = FindAnyObjectByType<GruntBulletPooling>();
         player = FindAnyObjectByType<PlayerControl>();
     }
 
@@ -23,7 +21,6 @@ public class GruntBullet : MonoBehaviour
         if (Vector3.Distance(this.transform.position, PosXStart) >= maxDistance)
         {
             DisableBullet();
-            poolBulletGrunt.ReturnBulletGrunt(this.gameObject);
         }
         MoveBullet();
 
@@ -51,9 +48,8 @@ public class GruntBullet : MonoBehaviour
         {
             player.GetComponent<HealthManager>().TakeDamage(damageBullet);
             GameObject effect = Instantiate(bulletGruntEffectPerfab,this.transform.position, Quaternion.identity);
-            Destroy(effect,1f);
+            Destroy(effect,2f);
             DisableBullet();
-            poolBulletGrunt.ReturnBulletGrunt(this.gameObject);
         }
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3012750975323050561}
   - component: {fileID: 3649878202103169453}
   - component: {fileID: 5254767878850020079}
-  m_Layer: 11
+  m_Layer: 14
   m_Name: GruntBullet
   m_TagString: GruntBullet
   m_Icon: {fileID: 0}

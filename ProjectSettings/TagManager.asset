@@ -25,8 +25,8 @@ TagManager:
   - BulletPlayer
   - Item
   - Turret
-  - 
-  - 
+  - BulletEnemy
+  - Trap
   - 
   - 
   - 
@@ -59,11 +59,11 @@ TagManager:
   - name: Enemy
     uniqueID: 3610988355
     locked: 0
-  - name: Player
-    uniqueID: 3277667547
-    locked: 0
   - name: Turret
     uniqueID: 1954755531
+    locked: 0
+  - name: Player
+    uniqueID: 3277667547
     locked: 0
   - name: BulletEnemy
     uniqueID: 2737550603

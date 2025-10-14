@@ -2,14 +2,12 @@
 
 public class Turret : MonoBehaviour
 {
-    [SerializeField] private Transform gun;
     [SerializeField] private Sprite[] spritesByAngle; // Gán các sprite theo góc
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firePoint; // Điểm bắn đạn
     [SerializeField] private float shootDelay = 1f;
+    [SerializeField] private float distanceToShoot = 10f;
     [SerializeField] private GameObject turret;
-    [SerializeField] private float speedBullet = 10f;
-
     private Transform player;
     private float shootTimer = 0f;
 
@@ -29,24 +27,29 @@ public class Turret : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        this.player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
     {
-        if (player == null) return;
+        if (this.player == null) return;
 
-        Vector3 direction = player.position - gun.position;
+        Vector3 direction = this.player.position - this.transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         UpdateGunSprite(angle);
 
         // Bắn đạn mỗi X giây
-        shootTimer += Time.deltaTime;
-        if (shootTimer >= shootDelay)
+        this.shootTimer += Time.deltaTime;
+        float distanceToPlayer = Vector3.Distance(player.position, this.transform.position);
+        Debug.Log("Distance to Player: " + distanceToPlayer);
+        if ( distanceToPlayer <= this.distanceToShoot)
         {
-            Shoot();
-            shootTimer = 0f;
+            if (this.shootTimer >= this.shootDelay)
+            {
+                Shoot();
+                this.shootTimer = 0f;
+            }
         }
     }
 
@@ -54,13 +57,15 @@ public class Turret : MonoBehaviour
     {
         Debug.Log("Shoot...");
         Vector3 dir = directionsByAngle[currentSpriteIndex];
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        bullet.GetComponent<Rigidbody2D>().linearVelocity = dir * speedBullet; // tốc độ đạn
+        GameObject bullet = LazyPooling.Instance.GetObject(bulletPrefab);
+        bullet.transform.position =  firePoint.position;
+        bullet.gameObject.SetActive(true);
+        bullet.gameObject.GetComponent<GruntBullet>().SetDirectionBullet(this.directionsByAngle[currentSpriteIndex]);
     }
 
     void Shoot2()
     {
-        Vector3 dir = directionsByAngle[currentSpriteIndex];
+        Vector3 dir = this.directionsByAngle[currentSpriteIndex];
         float baseAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
         float[] angleOffsets = { -20f,-10f, 0f, 10f, 20f }; // lệch trái, giữa, phải
@@ -70,8 +75,10 @@ public class Turret : MonoBehaviour
             float newAngle = baseAngle + offset;
             Vector2 shootDir = new Vector2(Mathf.Cos(newAngle * Mathf.Deg2Rad), Mathf.Sin(newAngle * Mathf.Deg2Rad));
 
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-            bullet.GetComponent<Rigidbody2D>().linearVelocity = shootDir.normalized * speedBullet;
+            GameObject bullet = LazyPooling.Instance.GetObject(bulletPrefab);
+            bullet.transform.position = firePoint.position;
+            bullet.gameObject.SetActive(true);
+            bullet.gameObject.GetComponent<GruntBullet>().SetDirectionBullet(shootDir);
         }
     }
 

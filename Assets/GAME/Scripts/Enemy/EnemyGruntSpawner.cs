@@ -5,6 +5,8 @@ public class EnemyGruntSpawner : Item, IHitable
 {
     [SerializeField] private int maxEnemy = 6;
     [SerializeField] private GameObject gruntPrefab;
+    [SerializeField] Transform positionEnemy;
+
     public int currentEnemy = 0;
 
     /////// tinh gio sinh enemy
@@ -33,9 +35,9 @@ public class EnemyGruntSpawner : Item, IHitable
             if (currentEnemy < maxEnemy)
             {
                 GameObject enemy = LazyPooling.Instance.GetObject(gruntPrefab);
-                enemy.transform.position = this.transform.position;
+                enemy.transform.position = this.positionEnemy.position;
                 enemy.GetComponent<HealthManager>().SetCurrentHpFull();
-                enemy.GetComponent<EnemyGrunt>().SetStartPos(this.transform.position);
+                enemy.GetComponent<EnemyGrunt>().SetStartPos(this.positionEnemy.position);
                 enemy.gameObject.SetActive(true);
                 currentEnemy++;
                 timer = 0f;
