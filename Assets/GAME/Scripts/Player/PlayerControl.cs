@@ -37,6 +37,16 @@ public class PlayerControl : MonoBehaviour, IHitable
 
     void Start()
     {
+        if (Time.deltaTime == 1)
+        {
+            BlinkObject a = this.GetComponentInChildren<BlinkObject>();
+            if (a != null)
+            {
+                a.Blinking(5f, true);
+                Debug.Log("Is Binking...");
+            }
+        }
+
         isLieDown =false;  
         this.rg = GetComponent<Rigidbody2D>();
         this.anim = GetComponentInChildren<PlayerAnimation>();
@@ -187,7 +197,7 @@ public class PlayerControl : MonoBehaviour, IHitable
             var itemDrop = this.playerCollision.CarryObjects[0];
             if (itemDrop != null)
             {
-                this.playerCollision.DropItem(itemDrop);
+                this.playerCollision.DropMine(itemDrop);
                 itemDrop.GetComponent<ItemBonus>()?.SetActiveMine();
                 Debug.Log("Drop Item:" + itemDrop.name);
             }

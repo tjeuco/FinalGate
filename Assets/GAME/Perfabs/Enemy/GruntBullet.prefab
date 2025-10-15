@@ -190,5 +190,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletGruntEffectPerfab: {fileID: 8275888354824854184, guid: 68621b368daaefd418a1fec8da906d88, type: 3}
   speedBulletGrunt: 6
-  damageBullet: 5
-  maxDistance: 10
+  damageBullet: 3
+  maxDistance: 8
