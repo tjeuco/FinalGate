@@ -4,6 +4,7 @@ using UnityEngine;
 public class GruntEnemyDataSO : ScriptableObject
 {
     public GameObject bulletGruntPrefab;
+    public float maxHp = 50f;
     public float fireRate = 1f;
     public float distanceDetectPlayer = 8f;
     public int scoreEnemyGrunt = 1;

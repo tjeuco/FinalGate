@@ -100,10 +100,6 @@ public class PlayerCollision : MonoBehaviour
 
     public void PickedPower(float timePowerUp)
     {
-        var player = this.GetComponent<PlayerControl>();
-        if (player != null)
-        {
-            player.GetComponentInChildren<BlinkObject>().Blinking(timePowerUp, true);
-        }
+        Debug.Log("Picked Power");
     }
 }

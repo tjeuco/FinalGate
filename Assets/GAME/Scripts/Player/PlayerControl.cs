@@ -18,6 +18,10 @@ public class PlayerControl : MonoBehaviour, IHitable
     private PlayerCollision playerCollision;
     private bool isLieDown = false;
 
+
+    [Header("-----Blink------")]
+    [SerializeField] private float timeBlinking = 3f;
+
     [Header("-----Actions------")]
     [SerializeField] InputActionReference jumpAction;
     [SerializeField] InputActionReference attackAction;
@@ -31,31 +35,27 @@ public class PlayerControl : MonoBehaviour, IHitable
 
     PlayerAnimation anim;
 
+    // thay doi boxColider2d khi nam hoac dung
+    [SerializeField] private Collider2D colliderLie;
+    [SerializeField] private Collider2D colliderIdle;
+
     PLAYER_STATE playerState = PLAYER_STATE.IsIdle;
     public PLAYER_STATE PlayerState => playerState;
 
 
     void Start()
     {
-        if (Time.deltaTime == 1)
-        {
-            BlinkObject a = this.GetComponentInChildren<BlinkObject>();
-            if (a != null)
-            {
-                a.Blinking(5f, true);
-                Debug.Log("Is Binking...");
-            }
-        }
-
         isLieDown =false;  
         this.rg = GetComponent<Rigidbody2D>();
         this.anim = GetComponentInChildren<PlayerAnimation>();
         this.playerCollision = GetComponent<PlayerCollision>();
+        
     }
 
     void Update()
     {
         this.anim.updateInputY(inputJoy.y);
+        this.SetColliderPlayerLie(); // set collider2d cho player khi dung hoac nam
 
         PlayerShoot();
         AutodetectState();
@@ -136,7 +136,7 @@ public class PlayerControl : MonoBehaviour, IHitable
         if (Mathf.Abs(this.rg.linearVelocityY) > 0.1f)
         {
             this.playerState = PLAYER_STATE.IsJump;
-        }
+        } 
         if (this.isLieDown == true)
         {
             this.playerState = PLAYER_STATE.IsLieDown;
@@ -209,6 +209,12 @@ public class PlayerControl : MonoBehaviour, IHitable
     public void GetHit(float dmg)
     {
         this.GetComponent<HealthManager>().TakeDamage(dmg);
+    }
+
+    public void SetColliderPlayerLie()
+    {
+        this.colliderIdle.enabled = !this.isLieDown;
+        this.colliderLie.enabled = this.isLieDown;
     }
 
     public enum PLAYER_STATE
