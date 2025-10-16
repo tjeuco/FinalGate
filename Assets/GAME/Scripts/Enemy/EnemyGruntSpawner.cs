@@ -6,6 +6,7 @@ public class EnemyGruntSpawner : Item, IHitable
     [SerializeField] private int maxEnemy = 6;
     [SerializeField] private GameObject gruntPrefab;
     [SerializeField] Transform positionEnemy;
+    private List<EnemyGrunt> listEnemyActives = new List<EnemyGrunt>();
 
     public int currentEnemy = 0;
 
@@ -18,31 +19,38 @@ public class EnemyGruntSpawner : Item, IHitable
     protected override void Start()
     {
         base.Start();
-        currentEnemy = 0;
-        timer  = 0f;
+        this.currentEnemy = 0;
+        this.timer  = 0f;
     }
     private void Update()
     {
-        timer += Time.deltaTime;
-        SpawnerEnemyGrunt();
-    }
-    private void SpawnerEnemyGrunt()
-    {
+        this.timer += Time.deltaTime;
 
-
-        if (timer >= timeDelay)
+        if (this.timer >= this.timeDelay)
         {
-            if (currentEnemy < maxEnemy)
+            SpawnerEnemyGrunt();
+            this.timer = 0f;
+        }
+    }
+    public void SpawnerEnemyGrunt()
+    {
+        if (currentEnemy < maxEnemy)
             {
-                GameObject enemy = LazyPooling.Instance.GetObject(gruntPrefab);
+                EnemyGrunt enemy = LazyPooling.Instance.GetObject(gruntPrefab).GetComponent<EnemyGrunt>();
                 enemy.transform.position = this.positionEnemy.position;
                 enemy.GetComponent<HealthManager>().SetCurrentHpFull();
-                enemy.GetComponent<EnemyGrunt>().SetStartPos(this.positionEnemy.position);
+                enemy.GetComponent<HealthManager>().SetSpawerGate(this);
+                enemy.SetStartPos(this.positionEnemy.position);
+                this.listEnemyActives.Add(enemy);
                 enemy.gameObject.SetActive(true);
                 currentEnemy++;
                 timer = 0f;
             }
-        }
-        
+    }
+
+    public void NotifyEnemyDie(EnemyGrunt enemy)
+    {
+        this.currentEnemy--;    
+        this.listEnemyActives.Remove(enemy);
     }
 }

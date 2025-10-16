@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7753746572601322427}
   - component: {fileID: 6023267260583898084}
   - component: {fileID: 1390329138783342877}
-  m_Layer: 3
+  m_Layer: 12
   m_Name: RedBarrel
   m_TagString: Item
   m_Icon: {fileID: 0}

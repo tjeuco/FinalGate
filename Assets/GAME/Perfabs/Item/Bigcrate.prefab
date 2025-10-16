@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2757564368062007990}
   - component: {fileID: 5331716425923136533}
   - component: {fileID: 2417009038700434334}
-  m_Layer: 3
+  m_Layer: 12
   m_Name: Bigcrate
   m_TagString: Item
   m_Icon: {fileID: 0}

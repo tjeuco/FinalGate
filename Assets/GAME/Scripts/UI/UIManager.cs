@@ -10,6 +10,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Canvas canvasGameplay;
     [SerializeField] private Canvas canvasSettings;
     [SerializeField] private Canvas canvasGameOver;
+    [SerializeField] private Canvas canvasGameWin;
+    [SerializeField] private Canvas canvasHightScore;
 
     [SerializeField] public Canvas canvasHp;
 
@@ -23,13 +25,15 @@ public class UIManager : Singleton<UIManager>
             {UIScreen.Gameplay, canvasGameplay},
             {UIScreen.Settings, canvasSettings},
             {UIScreen.GameOver, canvasGameOver},
+            {UIScreen.GameWin, canvasGameWin },
+            {UIScreen.HightScore, canvasHightScore}
         };
     }
     private void Start()
     {
-        this.ShowCanvas(UIScreen.MainMenu);
+        this.ShowOneCanvas(UIScreen.MainMenu);
     }
-    public void ShowCanvas(UIScreen screen)
+    public void ShowOneCanvas(UIScreen screen)
     {
         foreach (var item in screens)
         {
@@ -71,7 +75,7 @@ public class UIManager : Singleton<UIManager>
 
     public void PlayNow()
     {
-        this.ShowCanvas(UIScreen.Gameplay);
+        this.ShowOneCanvas(UIScreen.Gameplay);
     }
 
     public void ExitGame()
@@ -81,7 +85,7 @@ public class UIManager : Singleton<UIManager>
 
     public void MainMenu()
     {
-        this.ShowCanvas(UIScreen.MainMenu);
+        this.ShowOneCanvas(UIScreen.MainMenu);
     }
 
     public void PlayAgain()
@@ -90,6 +94,12 @@ public class UIManager : Singleton<UIManager>
         int index = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(index);
     }
+
+    public void GameWin() 
+    { 
+        this.ShowOneCanvas(UIScreen.GameWin);
+    }
+
 }
 
 public enum UIScreen
@@ -98,5 +108,7 @@ public enum UIScreen
     MainMenu,
     Gameplay,
     Settings,
-    GameOver
+    GameOver,
+    GameWin,
+    HightScore
 }

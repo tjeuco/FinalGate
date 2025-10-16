@@ -10,6 +10,8 @@ public class EnemyGrunt : MonoBehaviour, IHitable
     private Rigidbody2D rg;
     public Rigidbody2D Rg => rg;
 
+    
+
     [SerializeField] private GruntEnemyDataSO gruntEnemyDataSO;
     public GruntEnemyDataSO GruntEnemyDataSO => gruntEnemyDataSO;
     
@@ -36,6 +38,8 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         playerPos = FindAnyObjectByType<PlayerControl>();
         rg = GetComponent<Rigidbody2D>();
         ChangState(typeof(GruntStatePatrol));
+
+        
     }
 
     
@@ -108,7 +112,8 @@ public class EnemyGrunt : MonoBehaviour, IHitable
         }
     }
    */
-    
+   
+
 
     public void SetStartPos(Vector3 pos) // set lai pos khi pooling enemy
     {

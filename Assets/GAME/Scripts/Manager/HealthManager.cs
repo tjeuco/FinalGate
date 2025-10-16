@@ -12,6 +12,8 @@ public class HealthManager : MonoBehaviour
     [SerializeField] private float maxHp;
     [SerializeField] private float currentHp;
 
+    private EnemyGruntSpawner thisSpawer; // spawner da sinh ra enemy
+
     void OnEnable() //viết trong OnEnable để tránh lỗi khi object bị disable sd object pooling
     {
         if(sliderHpBarPrefabLoaded == null)
@@ -38,6 +40,8 @@ public class HealthManager : MonoBehaviour
         
         currentHp = maxHp;
         UpdateHpBar();
+
+        this.SetSpawerGate(thisSpawer); // Luu Spawer da sinh ra Enemy
     }
 
     void OnDisable()
@@ -76,17 +80,15 @@ public class HealthManager : MonoBehaviour
         // check xem đối tượng đang mang là gì
         if (this.gameObject.CompareTag("Player"))
         {
-            UIManager.Instance.ShowCanvas(UIScreen.GameOver);
+            UIManager.Instance.ShowOneCanvas(UIScreen.GameOver);
             Time.timeScale = 0; // Dừng game khi player chết
         }
         else if (this.gameObject.CompareTag("Enemy"))
         {
-            EnemyGruntSpawner numberEnemy = FindAnyObjectByType<EnemyGruntSpawner>();
-            if (numberEnemy == null)
+            if (this.thisSpawer != null)
             {
-                return;
+                this.thisSpawer.NotifyEnemyDie(this.GetComponent<EnemyGrunt>());
             }
-            numberEnemy.currentEnemy--; // giảm số lượng enemy hiện có trên scens
 
             ObserverManager.Notify(ObserverKey.addScore, this.GetComponent<EnemyGrunt>().ReturnScoreEnemy());
             GameManager.Instance.AddEnemyDied();
@@ -114,5 +116,10 @@ public class HealthManager : MonoBehaviour
     {
         if(this.transform.position.y < -30f)
             this.Die();
+    }
+
+    public void SetSpawerGate(EnemyGruntSpawner spawner)
+    {
+        this.thisSpawer = spawner;
     }
 }
